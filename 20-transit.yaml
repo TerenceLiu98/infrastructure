@@ -1,0 +1,8 @@
+- name: Transit Server Configuration
+  hosts: transit
+  become: yes
+  become_method: sudo # use sudo to escalate privileges
+  vars_files:
+    - group_vars/all.yaml
+  roles:
+    - transit

@@ -1,0 +1,55 @@
+- name: Ensure directory exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /opt/realm
+    - /etc/realm
+
+- name: Get realm binary package # A package for port forwarding
+  unarchive:
+    src: "https://github.com/zhboner/realm/releases/download/{{ realm_ver }}/realm-x86_64-unknown-linux-gnu.tar.gz"
+    dest: /opt/realm
+    remote_src: yes
+
+- name: Symlink binary of realm
+  file:
+    src: "/opt/realm/realm"
+    dest: "/usr/local/bin/realm"
+    state: link
+
+- name: Copy realm.service
+  copy:
+    src: realm.service
+    dest: /etc/systemd/system/realm.service
+
+- name: Generate realm config
+  template:
+    src: realm.json.j2
+    dest: /etc/realm/realm.json
+
+- name: Generate realm config
+  template:
+    src: routing.sh.j2
+    dest: /etc/realm/routing.sh
+    mode: "0755"
+
+- name: Copy routing.timer
+  copy:
+    src: routing.timer
+    dest: /etc/systemd/system/routing.timer
+
+- name: Copy routing.service
+  copy:
+    src: routing.service
+    dest: /etc/systemd/system/routing.service
+
+- name: Enable and start services
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  with_items:
+    - realm.service
+    - routing.timer
+    - routing.service

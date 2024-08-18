@@ -1,0 +1,9 @@
+--- 
+realm_ver: "v2.6.0"
+forward_to_ip: 
+  - "192.168.101.151"
+  - "192.168.101.152"
+forward_to_port:
+  - "80"
+  - "443"
+cloudflared_token: "token"

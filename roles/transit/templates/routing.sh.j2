@@ -1,0 +1,31 @@
+#!/bin/bash
+
+IP_ADDRESS={{ forward_to_ip[0] }}
+LOG_FILE="/var/log/routing.log"
+PING_ATTEMPTS=3
+
+# Function to check IP accessibility
+check_ip_accessibility() {
+    if ping -c $PING_ATTEMPTS $IP_ADDRESS > /dev/null; then
+	echo "[:)] IP $IP_ADDRESS is accessible." >> $LOG_FILE
+        return 0
+    else
+        echo "[:(] IP $IP_ADDRESS is not accessible." >> $LOG_FILE
+        return 1
+    fi
+}
+
+# Main loop to continuously monitor the IP address
+while true; do
+    if ! check_ip_accessibility; then
+	echo "[:)] Running 'sudo cloudflared service uninstall'..." >> $LOG_FILE
+        sudo cloudflared service uninstall
+	sudo systemctl stop realm
+    fi
+    if check_ip_accessibility; then
+	echo "[:)] install cloudflared..." >> $LOG_FILE
+        sudo cloudflared service install {{ cloudflared_token }}
+	sudo systemctl start realm
+    fi
+    sleep 30
+done

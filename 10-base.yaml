@@ -2,6 +2,8 @@
   hosts: all
   become: yes
   become_method: sudo # use sudo to escalate privileges
+  vars_files:
+    - group_vars/all.yaml
   roles:
     - basic
 
@@ -11,5 +13,7 @@
     - transit
   become: yes
   become_method: sudo # use sudo to escalate privileges
+  vars_files:
+    - group_vars/all.yaml
   roles:
     - network-optimize

@@ -1,0 +1,6 @@
+[Unit]
+Description=Ping IP and start service if successful
+
+[Service]
+User=root
+ExecStart=/etc/realm/routing.sh

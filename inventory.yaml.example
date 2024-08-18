@@ -1,24 +1,7 @@
-all:
-  hosts:
-    server1.example.com:
-      ansible_user: admin
-      ansible_port: 2222
-    server2.example.com:
-      ansible_user: admin
-      ansible_port: 2222
+[transit]
+192.168.1.1	ansible_ssh_user=user	ansible_ssh_port=22
+192.168.1.2 ansible_ssh_user=user ansible_ssh_port=22
 
-  children:
-    webservers:
-      hosts:
-        web1.example.com:
-          ansible_user: webadmin
-        web2.example.com:
-          ansible_user: webadmin
-
-    dbservers:
-      hosts:
-        db1.example.com:
-          ansible_user: dbadmin
-        db2.example.com:
-          ansible_user: dbadmin
-          ansible_ssh_private_key_file: /path/to/private/key
+[node_server]
+192.168.101.1 ansible_ssh_user=user ansible_ssh_port=22 
+192.168.101.2 ansible_ssh_user=user ansible_ssh_port=22 
