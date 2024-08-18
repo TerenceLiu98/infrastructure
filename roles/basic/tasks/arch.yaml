@@ -1,0 +1,7 @@
+- name: Update pacman package database
+  pacman:
+    update_cache: yes
+
+- name: Upgrade all pacman packages
+  pacman:
+    upgrade: yes

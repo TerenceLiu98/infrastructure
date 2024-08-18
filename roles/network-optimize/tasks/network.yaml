@@ -1,0 +1,33 @@
+- name: Set sysctl parameters
+  blockinfile:
+    path: /etc/sysctl.conf
+    block: |
+      net.core.default_qdisc=fq
+      net.ipv4.tcp_congestion_control=bbr
+      net.core.rmem_max=8388608
+      net.core.wmem_max=8388608
+      net.core.rmem_default=65536
+      net.core.wmem_default=65536
+      net.ipv4.tcp_rmem=8192 262144 8388608
+      net.ipv4.tcp_wmem=4096 16384 8388608
+      net.ipv4.tcp_window_scaling=1
+      net.ipv4.tcp_sack=1
+      net.ipv4.tcp_fastopen=1
+      net.ipv4.tcp_adv_win_scale=-2
+      net.ipv4.tcp_notsent_lowat=131072
+      net.ipv4.tcp_max_orphans=4096
+      net.ipv4.tcp_slow_start_after_idle=0
+      net.ipv4.tcp_syn_retries=3
+      net.ipv4.tcp_synack_retries=3
+      net.ipv4.tcp_max_syn_backlog=1500
+      net.ipv4.tcp_keepalive_probes=5
+      net.ipv4.tcp_keepalive_time=1800
+      net.ipv4.tcp_keepalive_intvl=60
+      net.ipv4.tcp_tw_reuse=1
+      net.ipv4.ip_local_port_range=32768 65535
+      net.ipv4.tcp_fin_timeout=60
+      net.ipv4.tcp_reordering=3
+      vm.swappiness=80
+
+- name: Sysctl Restart
+  shell: sysctl -p --system

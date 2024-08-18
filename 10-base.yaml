@@ -1,0 +1,15 @@
+- name: Update and Upgrade 
+  hosts: all
+  become: yes
+  become_method: sudo # use sudo to escalate privileges
+  roles:
+    - basic
+
+- name: Configure sysctl settings
+  hosts: 
+    - node
+    - transit
+  become: yes
+  become_method: sudo # use sudo to escalate privileges
+  roles:
+    - network-optimize

@@ -1,0 +1,13 @@
+- name: Update apt package index
+  apt:
+    update_cache: yes
+
+- name: Upgrade all apt packages
+  apt:
+    upgrade: yes
+
+- name: Install the Basic Software
+  apt:
+    name: ['bash-completion', 'conntrack', 'ipset', 'ipvsadm', 'jq', 'libseccomp2', 'nfs-common', 'psmisc', 'rsync', 'socat']
+    state: present
+  ignore_errors: true
