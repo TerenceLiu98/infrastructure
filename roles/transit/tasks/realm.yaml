@@ -1,4 +1,4 @@
-- name: Ensure directory exist
+- name: Ensure realm's directory exist
   file:
     path: "{{ item }}"
     state: directory
