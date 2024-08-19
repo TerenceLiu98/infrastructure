@@ -2,7 +2,7 @@
   apt:
     name: gnupg
     state: present
-
+    
 - name: Create directory for Cloudflare GPG key
   file:
     path: /usr/share/keyrings

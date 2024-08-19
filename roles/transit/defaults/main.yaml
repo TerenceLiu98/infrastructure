@@ -1,6 +1,7 @@
 --- 
 realm_ver: "v2.6.0"
 udp2raw_ver: "20230206.0"
+overlay_network_name: transit
 forward_to_ip: 
   - "192.168.101.151"
   - "192.168.101.152"

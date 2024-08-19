@@ -1,0 +1,37 @@
+- name: Ensure udp2raw directory exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - /opt/udp2raw
+    - /etc/udp2raw
+
+- name: Get udp2raw binary package
+  unarchive:
+    src: "https://github.com/wangyu-/udp2raw/releases/download/{{ udp2raw_ver }}/udp2raw_binaries.tar.gz"
+    dest: /opt/udp2raw
+    remote_src: yes
+
+- name: Symlink binary of udp2raw
+  file:
+    src: "{{ '/opt/udp2raw/udp2raw_' + ansible_architecture }}"
+    dest: "/usr/local/bin/udp2raw"
+    state: link
+  when: ansible_architecture in ['x86_64', 'arm'] 
+
+- name: Copy Wireguard Configuration
+  copy:
+    src: "wireguard/{{ ansible_hostname }}.conf"
+    dest: /etc/wireguard/{{ overlay_network_name }}.conf
+
+- name: Register Wireguard with Systemd
+  systemd:
+    name: wg-quick@{{ overlay_network_name }}
+    enabled: yes
+    state: started
+  register: wireguard
+
+- name: Get Wireguard status 
+  command: "wg show {{ overlay_network_name }}"
+  register: wireguard_info
+  ignore_errors: true

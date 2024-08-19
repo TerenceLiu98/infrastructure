@@ -8,6 +8,6 @@
 
 - name: Install the Basic Software
   apt:
-    name: ['bash-completion', 'conntrack', 'ipset', 'ipvsadm', 'jq', 'libseccomp2', 'nfs-common', 'psmisc', 'rsync', 'socat']
+    name: ['bash-completion', 'conntrack', 'ipset', 'ipvsadm', 'jq', 'libseccomp2', 'nfs-common', 'psmisc', 'rsync', 'socat', 'wireguard-tools']
     state: present
   ignore_errors: true

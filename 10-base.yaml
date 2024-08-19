@@ -9,8 +9,8 @@
 
 - name: Configure sysctl settings
   hosts: 
-    - node
     - transit
+    - node_server
   become: yes
   become_method: sudo # use sudo to escalate privileges
   vars_files:
