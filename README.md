@@ -26,3 +26,6 @@
    2. install `cloudflared` -> `cloudflared.yaml`
    3. install `realm` and start service with icmp monitoring -> `realm.yaml`
    4. copy `wireguard` configuration to corresponding nodes and start wireguard as systemd service
+
+## Others 
+* To generate `wireguard` configuration, please go to: [wgtools](https://github.com/TerenceLiu98/wgtools/tree/vxlan)
